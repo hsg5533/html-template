@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>쿼리 파라미터 보기</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+        padding: 20px;
+      }
+      h1 {
+        color: #333;
+      }
+      #params {
+        background-color: #fff;
+        padding: 15px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+      }
+      .param-item {
+        margin-bottom: 10px;
+      }
+      .param-name {
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>토스 페이먼츠 결제 성공</h1>
+    <div id="params">
+      <p>쿼리 파라미터가 여기에 표시됩니다.</p>
+    </div>
+
+    <script>
+      function getQueryParams() {
+        const params = new URLSearchParams(window.location.search);
+        const paramsDiv = document.getElementById("params");
+        paramsDiv.innerHTML = "";
+
+        if (params.toString() === "") {
+          paramsDiv.innerHTML = "<p>쿼리 파라미터가 없습니다.</p>";
+        } else {
+          params.forEach((value, key) => {
+            const paramItem = document.createElement("div");
+            paramItem.classList.add("param-item");
+            paramItem.innerHTML = `<span class="param-name">${key}</span>: ${value}`;
+            paramsDiv.appendChild(paramItem);
+          });
+        }
+      }
+
+      window.onload = getQueryParams;
+    </script>
+  </body>
+</html>

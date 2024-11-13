@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>화면 비율 계산기</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1>화면 비율 계산기</h1>
+      <p>화면 해상도를 입력하고 비율을 계산하세요.</p>
+      <label for="width">가로 픽셀 수:</label>
+      <input
+        type="number"
+        id="width"
+        placeholder="가로 픽셀 수"
+        oninput="calculateAspectRatio()"
+      />
+      <label for="height">세로 픽셀 수:</label>
+      <input
+        type="number"
+        id="height"
+        placeholder="세로 픽셀 수"
+        oninput="calculateAspectRatio()"
+      />
+      <p>화면 비율: <span id="ratio"></span></p>
+    </div>
+    <script>
+      function gcd(a, b) {
+        return b === 0 ? a : gcd(b, a % b);
+      }
+
+      function calculateAspectRatio() {
+        const width = document.getElementById("width").value;
+        const height = document.getElementById("height").value;
+        if (width && height) {
+          const ratio = gcd(width, height);
+          const aspectRatio = `${width / ratio}:${height / ratio}`;
+          document.getElementById("ratio").textContent = aspectRatio;
+        } else {
+          document.getElementById("ratio").textContent = "";
+        }
+      }
+    </script>
+  </body>
+</html>

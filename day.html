@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        background-color: black;
+      }
+      #when {
+        color: #fff;
+        margin: 0;
+        height: 98vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="when"></h1>
+    <script>
+      const weekend = ["일", "월", "화", "수", "목", "금", "토"];
+      function getWeekNumber(e) {
+        let t = e.getDate(),
+          n = new Date(e.setDate(1)),
+          g = n.getDay();
+        return parseInt((g - 1 + t) / 7) + 1;
+      }
+      function getWeek() {
+        const today = new Date();
+        const firstDayOfYear = new Date(today.getFullYear(), 0, 1);
+        const daysSinceStart = Math.floor(
+          (today - firstDayOfYear) / (24 * 60 * 60 * 1000)
+        );
+        const weekNumber = Math.ceil(
+          (daysSinceStart + firstDayOfYear.getDay() + 1) / 7
+        );
+
+        return weekNumber;
+      }
+
+      setInterval(() => {
+        const date = new Date();
+        document.getElementById("when").innerHTML =
+          "오늘은 " +
+          (date.getMonth() + 1) +
+          "월 " +
+          date.getDate() +
+          "일 " +
+          getWeek() +
+          "주차 " +
+          weekend[date.getDay()] +
+          "요일 " +
+          date.getHours() +
+          "시 " +
+          date.getMinutes() +
+          "분 " +
+          date.getSeconds() +
+          "초 입니다.";
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>색상 블렌딩</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f4f4f4;
+      }
+
+      label {
+        margin-bottom: 10px;
+        color: #333;
+      }
+
+      #colorInputs {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      #color1,
+      #color2 {
+        margin-top: 5px;
+        border: 0; /* Border 수정 */
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      }
+
+      #result {
+        width: 150px;
+        height: 150px;
+        border: 1px solid #000;
+        margin-top: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      }
+
+      button {
+        margin-top: 20px;
+        padding: 10px;
+        font-size: 16px;
+        background-color: #3498db;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease-in-out;
+      }
+
+      button:hover {
+        background-color: #2980b9;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="colorInputs">
+      <label for="color1">첫 번째 색상: </label>
+      <input type="color" id="color1" value="#ff0000" />
+
+      <label for="color2">두 번째 색상: </label>
+      <input type="color" id="color2" value="#00ff00" />
+    </div>
+
+    <button onclick="blendColors()">블렌딩</button>
+
+    <div id="result"></div>
+
+    <script>
+      function blendColors() {
+        const color1 = document.getElementById("color1").value;
+        const color2 = document.getElementById("color2").value;
+
+        const resultColor = blend(color1, color2);
+
+        document.getElementById("result").style.backgroundColor = resultColor;
+      }
+
+      function blend(color1, color2) {
+        const c1 = hexToRgb(color1);
+        const c2 = hexToRgb(color2);
+
+        const blendedColor = {
+          r: Math.round((c1.r + c2.r) / 2),
+          g: Math.round((c1.g + c2.g) / 2),
+          b: Math.round((c1.b + c2.b) / 2),
+        };
+
+        return rgbToHex(blendedColor);
+      }
+
+      function hexToRgb(hex) {
+        const bigint = parseInt(hex.slice(1), 16);
+        const r = (bigint >> 16) & 255;
+        const g = (bigint >> 8) & 255;
+        const b = bigint & 255;
+
+        return { r, g, b };
+      }
+
+      function rgbToHex({ r, g, b }) {
+        return `#${((1 << 24) | (r << 16) | (g << 8) | b)
+          .toString(16)
+          .slice(1)}`;
+      }
+      const test = hexToRgb("#efcc00");
+      console.log(test);
+      console.log(rgbToHex(test));
+    </script>
+  </body>
+</html>
